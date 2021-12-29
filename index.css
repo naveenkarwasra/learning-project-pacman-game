@@ -1,0 +1,97 @@
+
+body{
+    margin: auto;
+    padding: 0;
+    text-align: center;
+    background-color: black;
+    font-family: Arial, Helvetica, sans-serif;    
+}
+h1{
+    color: goldenrod;
+    text-transform: uppercase;
+}
+h3{
+    color: red;
+}
+#score{
+    color: goldenrod;
+}
+.grid{
+    width: 420px;
+    height: 420px;
+    border: 2px solid gray;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+.grid div{
+    width: 15px;
+    height: 15px;      
+}
+.pac-dot{
+    background-color: green;
+    border: 5px solid black;
+    box-sizing: border-box;
+}
+.wall{
+    background-color: blue;
+}
+.power-pellet{
+    background: url("strawberry.png");
+    background-size: cover;
+    background-position: center;
+}
+.pacman-forward{
+    background: url("pacman-forward.png");
+    background-size: cover;
+    border-radius: 7.5px;
+    border: none;
+}
+.pacman-backward{
+    background: url("pacman-backward.png");
+    background-size: cover;
+    border-radius: 7.5px;
+    border: none;
+}
+.pacman-upward{
+    background: url("pacman-upward.png");
+    background-size: cover;
+    border-radius: 7.5px;
+    border: none;
+}
+.pacman-downward{
+    background: url("pacman-downward.png");
+    background-size: cover;
+    border-radius: 7.5px;
+    border: none;
+}
+.blinky{
+    background: url("blinky.png");
+    background-size: cover;
+    border: none;   
+}
+.pinky{
+    background: url("pinky01.png");
+    background-size: cover;
+    border: none;
+}
+.inky{
+    background: url("inky01.png");
+    background-size: cover;
+    border: none;
+}
+.clyde{
+    background: url("clyde01.png");
+    background-size: cover;
+    border: none;
+}
+.scared-ghost{
+    opacity: .4;
+    border: none;
+}
+.forward{
+    width: 5px;
+    color: white;
+    margin-left: 2px;
+    z-index: 1;
+}
