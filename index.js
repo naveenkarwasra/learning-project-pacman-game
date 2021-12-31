@@ -40,19 +40,14 @@ const layout = [
 ]
 //create board
 function createBoard() {
-    for (let i = 0; i < layout.length; i++) {
-        //create squers
-        const square = document.createElement("div")
-        //put squere in grid
-        grid.appendChild(square)
-        //put squere in squeres array
-        squares.push(square)
-        //in this for loop loops in layout array from 0 index to length of array and change index value to "div". Then store this value in square variable. Then add this square in to grid variable which is actually a grid class in css. In end it pushes square in to empty squares array.
+    for (let i = 0; i < layout.length; i++) {        
+        const square = document.createElement("div")        
+        grid.appendChild(square)        
+        squares.push(square)       
 
         //create grid
         if (layout[i] === 0) {
-            squares[i].classList.add("pac-dot")
-            //in this for loop loops over index and whereever it finds 0 it adds css class pac-dot
+            squares[i].classList.add("pac-dot")           
 
         }
         else if (layout[i] === 1) {
@@ -79,22 +74,9 @@ squares[pacmanCurrentIndex].classList.add("pacman-forward")
 //down - 40
 
 function control(e) {
-    squares[pacmanCurrentIndex].classList.remove("pacman-forward", "pacman-backward","pacman-upward", "pacman-downward")
+    squares[pacmanCurrentIndex].classList.remove("pacman-forward", "pacman-backward","pacman-upward", "pacman-downward")   
     
-    //it will create a function to perform an action
-    //if(e.keyCode === 37){
-    //it will create a condition that perform action if key 37 is pressed
-    //  console.log("left key")
-    //} else if(e.keyCode === 38){
-
-    // }
-    // else if(e.keyCode === 39){
-
-    // }
-    // else if(e.keyCode === 40){
-
-    // }
-    switch (e.keyCode/*condition name*/) {
+    switch (e.keyCode) {
         case 40:
             if (
                 !squares[pacmanCurrentIndex + width].classList.contains("ghost-lair") &&
@@ -117,19 +99,20 @@ function control(e) {
                 squares[pacmanCurrentIndex].classList.add("pacman-upward")
             break
 
-        case 37:      /*condition value*/
+        case 37:      
             if (
                 !squares[pacmanCurrentIndex - 1].classList.contains("ghost-lair") &&
                 !squares[pacmanCurrentIndex - 1].classList.contains("wall") &&
                 pacmanCurrentIndex % width !== 0
             )
 
-                pacmanCurrentIndex -= 1 /*action which will be performed if condition is true*/
+                pacmanCurrentIndex -= 1 
             if (pacmanCurrentIndex === 364) {
                 pacmanCurrentIndex = 391
             }
             squares[pacmanCurrentIndex].classList.add("pacman-backward")
             break
+
         case 39:
             if (
                 !squares[pacmanCurrentIndex + 1].classList.contains("ghost-lair") &&
@@ -142,17 +125,15 @@ function control(e) {
             }
             squares[pacmanCurrentIndex].classList.add("pacman-forward")
             break
-    }
-    
+    }    
     pacDotEaten()
     powerPelletEaten()
     gameWin()
-    gameOver()
-    
+    gameOver()    
 }
 
 document.addEventListener("keydown", control)
-//it will run control function in document(html) whenever an event like clicking, pressing key etc. occur
+
 
 //eating pac dotes
 function pacDotEaten() {
@@ -162,23 +143,17 @@ function pacDotEaten() {
         scoreDIsplay.innerHTML = score
     }
 }
+
 //eating power pellet
-function powerPelletEaten() {
-    //if pacman contains power pellet
+function powerPelletEaten() {    
     if (squares[pacmanCurrentIndex].classList.contains("power-pellet")) {
         squares[pacmanCurrentIndex].classList.remove("power-pellet")
-        //add score 10
-        score += 10
-
-        //change each ghost to scared
-        ghosts.forEach(ghost => { ghost.isScared = true })
-
-        //set timeout to unscare ghost after 10 sec
+        score += 10        
+        ghosts.forEach(ghost => { ghost.isScared = true })        
         setTimeout(ghostUnScared, 10000)
     }
-
-
 }
+
 //function for set timeout
 function ghostUnScared() {
     ghosts.forEach(ghost => { ghost.isScared = false })
@@ -186,7 +161,6 @@ function ghostUnScared() {
 
 
 //creating ghost
-
 class Ghost {
     constructor(className, startIndex, speed) {
         this.className = className
@@ -205,7 +179,7 @@ let ghosts = [
 ]
 
 //drawing ghost onto grid
-ghosts.forEach(ghost/*could be any name*/ => {
+ghosts.forEach(ghost => {
     squares[ghost.currentIndex].classList.add(ghost.className)
     squares[ghost.currentIndex].classList.add("ghost")
 })
@@ -213,35 +187,24 @@ ghosts.forEach(ghost/*could be any name*/ => {
 //moving ghost
 ghosts.forEach(ghost => moveGhost(ghost))
 function moveGhost(ghost) {
-    const directions = [-1, 1, -width, width] //setting up directions
-    let direction = directions[Math.floor(Math.random() * directions.length)] // creating random direction
+    const directions = [-1, 1, -width, width] 
+    let direction = directions[Math.floor(Math.random() * directions.length)] 
     ghost.timerId = setInterval(function () {
         if (
             !squares[ghost.currentIndex + direction].classList.contains("wall") && //prevent ghost onto wall
             !squares[ghost.currentIndex + direction].classList.contains("ghost") // prevent ghost to another one
         ) {
-            squares[ghost.currentIndex].classList.remove(ghost.className) // remove class or ghost on current position
+            squares[ghost.currentIndex].classList.remove(ghost.className) 
             squares[ghost.currentIndex].classList.remove("ghost", "scared-ghost")
-            ghost.currentIndex += direction //adding random index
-            squares[ghost.currentIndex].classList.add(ghost.className) //adding back class to new index
+            ghost.currentIndex += direction 
+            squares[ghost.currentIndex].classList.add(ghost.className) 
             squares[ghost.currentIndex].classList.add("ghost")
         } else { direction = directions[Math.floor(Math.random() * directions.length)] }
 
         //changing style of scared ghost
         if (ghost.isScared) {
             squares[ghost.currentIndex].classList.add("scared-ghost")
-        }
-
-        //if the ghost is current scared AND pacman is on it
-
-        //remove classnames - ghost.className, 'ghost', 'scared-ghost'
-
-        // change ghosts currentIndex back to its startIndex
-
-        //add a score of 100
-
-        //re-add classnames of ghost.className and 'ghost' to the ghosts new postion
-
+        }     
         if (
             ghost.isScared &&
             squares[ghost.currentIndex].classList.contains("pacman-forward", "pacman-backward","pacman-upward", "pacman-downward")
@@ -256,35 +219,24 @@ function moveGhost(ghost) {
 
     }, ghost.speed)
 }
+
 // check for game over
-function gameOver() {
-    //if the square pacman is in contains a ghost AND the square does NOT contain a scared ghost 
+function gameOver() {    
     if (
         squares[pacmanCurrentIndex].classList.contains("ghost") &&
         !squares[pacmanCurrentIndex].classList.contains("scared-ghost")
-    ) {
-        //for each ghost - we need to stop it moving
-        ghosts.forEach(ghost => clearInterval(ghost.timerId))
-
-        //remove eventlistener from our control function
-        document.removeEventListener("keydown", control)
-
-        //tell user the game is over
+    ) {        
+        ghosts.forEach(ghost => clearInterval(ghost.timerId))        
+        document.removeEventListener("keydown", control)        
         scoreDIsplay.innerHTML = "you Lose"
     }
 }
 
 //check for win
-
 function gameWin() {
-    if (score === 100) {
-        //stop each ghost
-
-        ghosts.forEach(ghost => clearInterval(ghost.timerId))
-        //remove the eventListener for the control function
-        document.removeEventListener("keydown", control)
-
-        //tell our user we have won
+    if (score === 120) {       
+        ghosts.forEach(ghost => clearInterval(ghost.timerId))        
+        document.removeEventListener("keydown", control)        
         scoreDIsplay.innerHTML = "You Won"
     }
 }
